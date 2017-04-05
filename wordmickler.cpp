@@ -11,7 +11,7 @@
 #include<time.h>
 
 
-#define MAX_REPEAT 5
+#define MAX_REPEAT 8
 
 std::vector<std::string> split(const std::string sentance){
   int pos = 0;
@@ -51,9 +51,9 @@ void wordscramble(){
       if(rand() % 10 < 5){
         int limit = rand() % (MAX_REPEAT - 1);
         for(int i = 0; i < limit; i++){
-          if(rand() % 10 < 5){
-            randomizeCase(word);
-          }
+
+          randomizeCase(word);
+
           std::cout << word << " ";
         }
       }
