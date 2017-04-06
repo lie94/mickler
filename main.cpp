@@ -29,7 +29,7 @@ std::vector<std::string> read(){
     text.append("\n");
 
   }
-  return dic::split(text);
+  return dic::split(text, ' ');
 }
 
 

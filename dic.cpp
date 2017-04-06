@@ -8,13 +8,13 @@
 
 namespace dic{
 
-std::vector<std::string> split(const std::string sentance){
+std::vector<std::string> split(const std::string sentance, const char c){
   int pos = 0;
   int lastPos = pos;
   std::vector<std::string> words;
 
   while (pos <= sentance.size()) {
-    if(sentance[pos] == ' '){
+    if(sentance[pos] == c){
       words.push_back(sentance.substr(lastPos, pos - lastPos));
       lastPos = pos + 1;
     }else if(sentance[pos] == '\n'){
@@ -39,7 +39,7 @@ void swap(std::vector<std::string>  & words){
     while(getline(dicfile, line)){
       if(line[0] == '#')
       continue;
-      std::vector<std::string> words = split(line);
+      std::vector<std::string> words = split(line,'|');
       map[words[0]] = words[1];
     }
 
