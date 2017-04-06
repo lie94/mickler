@@ -2,6 +2,7 @@
 #ifndef F_WORDMICKLER
 #define F_WORDMICKLER
 
+
 #include<iostream>
 #include<string>
 #include<vector>
@@ -9,25 +10,6 @@
 #include<iterator>
 #include<stdlib.h>
 #include<time.h>
-
-
-#define MAX_REPEAT 8
-
-std::vector<std::string> split(const std::string sentance){
-  int pos = 0;
-  int lastPos = pos;
-  std::vector<std::string> words;
-
-  while (pos <= sentance.size()) {
-    if(sentance[pos] == ' ' || sentance[pos] == '\n'){
-      words.push_back(sentance.substr(lastPos, pos - lastPos));
-      lastPos = pos + 1;
-    }
-    pos++;
-  }
-  words.push_back(sentance.substr(lastPos));
-  return words;
-}
 
 void randomizeCase(std::string & word){
   for(int i = 0; i < word.size(); i++){
@@ -39,30 +21,35 @@ void randomizeCase(std::string & word){
   }
 }
 
-void wordscramble(){
-  std::string input = " ";
+void wordscramble(std::vector<std::string> & words, const int MAX_REPEAT){
+
   srand(time(NULL));
-  while(getline(std::cin, input)){
-    std::vector<std::string> words;
-    words = split(input);
 
-    for(std::string word : words ){
-      //random amount
-      if(rand() % 10 < 5){
-        int limit = rand() % (MAX_REPEAT - 1);
-        for(int i = 0; i < limit; i++){
+  int size = words.size();
 
-          randomizeCase(word);
+  for(int j = 0; j < size; j++){
+    std::string word = words[j];
+    if(word == "\n"){
 
-          std::cout << word << " ";
-        }
-      }
-      if(rand() % 10 < 5){
-        randomizeCase(word);
-      }
-      std::cout << word << " ";
+      continue;
     }
-    std::cout << std::endl;
+
+    //random amount
+    if(rand() % 10 < 5){
+      int limit = rand() % (MAX_REPEAT - 1);
+      for(int i = 0; i < limit; i++){
+
+        randomizeCase(word);
+        words.insert(words.begin() + j + 1 + i, word);
+
+      }
+      j += limit;
+      size += limit;
+    }
+    if(rand() % 10 < 5){
+      randomizeCase(word);
+    }
+    words[j] = word;
   }
 }
 
